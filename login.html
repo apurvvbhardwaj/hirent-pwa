@@ -3,77 +3,342 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HIRENT — Login</title>
+  <title>HIRENT — Log In</title>
+  <meta name="description" content="Log in to your HIRENT account." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --mint:#31D7A9;--mint-2:#A7F3E5;--mint-accent:#7EEAD3;--mint-light:#E8FBF6;
-      --text:#0F172A;--text-2:#64748B;--border:#E5E7EB;--card:#fff;
-      --shadow:0 8px 40px rgba(49,215,169,.08),0 2px 8px rgba(0,0,0,.05);
-      --radius:20px;--pill:100px;
-      --font:'Plus Jakarta Sans',system-ui,sans-serif;
-      --ease:cubic-bezier(.4,0,.2,1);
-    }
-    html{-webkit-font-smoothing:antialiased}
-    body{
-      font-family:var(--font);background:linear-gradient(160deg,#f0fdf8 0%,#fafffd 60%);
-      color:var(--text);min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px;
-    }
-    .login-card{
-      background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
-      border:1.5px solid rgba(49,215,169,.12);padding:40px 32px;width:100%;max-width:400px;
-      text-align:center;
-    }
-    .login-wordmark{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:24px;display:block}
-    .login-title{font-size:24px;font-weight:800;margin-bottom:8px}
-    .login-sub{font-size:14px;color:var(--text-2);margin-bottom:28px}
-    .login-field{margin-bottom:14px;text-align:left}
-    .login-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
-    .login-input{
-      width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;
-      font-family:var(--font);font-size:14px;color:var(--text);outline:none;
-      transition:border-color .2s,box-shadow .2s;
-    }
-    .login-input:focus{border-color:var(--mint);box-shadow:0 0 0 4px rgba(49,215,169,.18)}
-    .login-btn{
-      width:100%;padding:15px;background:var(--mint);color:#fff;border:none;border-radius:var(--pill);
-      font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;
-      box-shadow:0 6px 24px rgba(49,215,169,.35);transition:background .22s,transform .2s;
-    }
-    .login-btn:hover{background:#28C99D;transform:translateY(-1px)}
-    .login-divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--text-2);font-size:12px}
-    .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border)}
-    .login-link{display:block;text-align:center;font-size:14px;color:var(--text-2);text-decoration:none;margin-top:18px;transition:color .2s}
-    .login-link:hover{color:var(--mint)}
-    .login-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);text-decoration:none;margin-top:24px;transition:color .2s}
-    .login-back:hover{color:var(--mint)}
-  </style>
+  <link rel="stylesheet" href="auth.css" />
 </head>
 <body>
-  <div class="login-card">
-    <span class="login-wordmark">HIRENT</span>
-    <h1 class="login-title">Welcome back</h1>
-    <p class="login-sub">Log in to continue your journey.</p>
-    <form id="loginForm" onsubmit="return false">
-      <div class="login-field">
-        <label class="login-label" for="email">Email</label>
-        <input class="login-input" id="email" type="email" placeholder="you@example.com" autocomplete="email" />
-      </div>
-      <div class="login-field">
-        <label class="login-label" for="password">Password</label>
-        <input class="login-input" id="password" type="password" placeholder="Enter your password" autocomplete="current-password" />
-      </div>
-      <button class="login-btn" type="submit">Log In</button>
-    </form>
-    <div class="login-divider">or</div>
-    <a href="#" class="login-link">Forgot password?</a>
-    <a href="index.html" class="login-back">← Back to home</a>
+
+  <!-- Page loader — shown until auth state resolves -->
+  <div class="page-loader" id="pageLoader" aria-hidden="true">
+    <div class="loader-ring"></div>
   </div>
-  <script>
-    /* Placeholder — Firebase auth will be wired here later */
+
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
+  <!-- ═══════════════════════════ MAIN ═══════════════════════════ -->
+  <main class="auth-shell" id="authShell">
+
+    <!-- Top Bar -->
+    <div class="auth-topbar">
+      <a href="index.html" class="auth-wordmark">HIRENT</a>
+      <span class="auth-topbar-badge">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M8 1l1.5 3.5L13 5l-2.5 2.5.6 3.5L8 9.5 4.9 11l.6-3.5L3 5l3.5-.5L8 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        Welcome back
+      </span>
+    </div>
+
+    <!-- Hero illustration -->
+    <div class="auth-hero" aria-hidden="true">
+      <div class="auth-hero-ring"></div>
+      <!-- Floating dots -->
+      <div class="auth-hero-dot" style="width:5px;height:5px;top:8%;left:18%;animation-delay:.2s"></div>
+      <div class="auth-hero-dot" style="width:7px;height:7px;top:15%;right:12%;animation-delay:.8s"></div>
+      <div class="auth-hero-dot" style="width:4px;height:4px;bottom:12%;left:22%;animation-delay:1.4s"></div>
+      <div class="auth-hero-dot" style="width:6px;height:6px;bottom:18%;right:18%;animation-delay:.5s"></div>
+      <div class="auth-hero-icon">
+        <!-- Lock icon -->
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="12" cy="16.5" r="1.5" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Card -->
+    <div class="auth-card" role="main">
+      <h1 class="auth-heading">Welcome back 👋</h1>
+      <p class="auth-sub">Log in to your Hirent account<br>and continue your journey.</p>
+
+      <!-- Google -->
+      <button class="auth-google-btn" id="googleBtn" type="button" aria-label="Continue with Google">
+        <!-- Official Google G logo SVG -->
+        <svg class="google-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+          <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+          <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+          <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-divider">or</div>
+
+      <!-- Email/Password form -->
+      <form id="loginForm" novalidate>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label class="form-label" for="loginEmail">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 8l10 6 10-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <input
+              class="form-input"
+              type="email"
+              id="loginEmail"
+              name="email"
+              placeholder="Enter your email"
+              autocomplete="email"
+              inputmode="email"
+              aria-required="true"
+              aria-describedby="loginEmailError"
+            />
+          </div>
+          <p class="field-error" id="loginEmailError" role="alert" aria-live="polite">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span></span>
+          </p>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+          <label class="form-label" for="loginPassword">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+            <input
+              class="form-input"
+              type="password"
+              id="loginPassword"
+              name="password"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              aria-required="true"
+              aria-describedby="loginPasswordError"
+            />
+            <button class="pw-toggle" id="loginPwToggle" type="button" aria-label="Show password"></button>
+          </div>
+          <p class="field-error" id="loginPasswordError" role="alert" aria-live="polite">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span></span>
+          </p>
+        </div>
+
+        <!-- Remember Me + Forgot Password -->
+        <div class="auth-row">
+          <label class="checkbox-wrap" for="rememberMe">
+            <input type="checkbox" id="rememberMe" name="rememberMe" />
+            <span class="checkbox-label">Remember me</span>
+          </label>
+          <button class="auth-forgot-link" id="forgotPasswordBtn" type="button">Forgot password?</button>
+        </div>
+
+        <!-- Submit -->
+        <button class="auth-btn" id="loginBtn" type="submit">
+          <div class="btn-spinner" aria-hidden="true"></div>
+          <span class="btn-label">Log In</span>
+        </button>
+
+      </form>
+
+      <!-- Switch to Signup -->
+      <div class="auth-switch">
+        Don't have an account? <a href="signup.html">Sign up</a>
+      </div>
+    </div>
+
+    <!-- Security card -->
+    <div class="auth-security-card" role="complementary" aria-label="Security information">
+      <div class="security-icon-wrap" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div>
+        <p class="security-title">Secure &amp; Trusted</p>
+        <p class="security-desc">Your data is protected with enterprise-grade security. We never share your information.</p>
+      </div>
+    </div>
+
+    <!-- Feature footer -->
+    <div class="auth-features" role="list" aria-label="Features">
+      <div class="feature-item" role="listitem">
+        <div class="feature-item-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.8"/></svg>
+        </div>
+        <div>
+          <p class="feature-item-title">Secure Login</p>
+          <p class="feature-item-desc">Enterprise-grade protection for your data</p>
+        </div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <div class="feature-item-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <p class="feature-item-title">Quick Access</p>
+          <p class="feature-item-desc">Get started in seconds with easy sign in</p>
+        </div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <div class="feature-item-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <p class="feature-item-title">Personalized</p>
+          <p class="feature-item-desc">Experience tailored to your role</p>
+        </div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <div class="feature-item-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div>
+          <p class="feature-item-title">Privacy First</p>
+          <p class="feature-item-desc">Your data stays private and secure</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════ FORGOT PASSWORD MODAL ══════════ -->
+  <div class="modal-backdrop" id="forgotModal" role="dialog" aria-modal="true" aria-labelledby="forgotModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" id="forgotModalTitle">Reset Password</h2>
+        <button class="modal-close" id="forgotModalClose" type="button" aria-label="Close modal">
+          <svg viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <p class="modal-sub">Enter your email address and we'll send you a link to reset your password.</p>
+
+      <div class="form-group">
+        <label class="form-label" for="forgotEmail">Email address</label>
+        <div class="input-wrap">
+          <span class="input-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 8l10 6 10-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </span>
+          <input
+            class="form-input"
+            type="email"
+            id="forgotEmail"
+            placeholder="Enter your email"
+            inputmode="email"
+            autocomplete="email"
+            aria-describedby="forgotEmailError"
+          />
+        </div>
+        <p class="field-error" id="forgotEmailError" role="alert" aria-live="polite">
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M8 5v3.5M8 11v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span></span>
+        </p>
+      </div>
+
+      <button class="auth-btn" id="forgotSubmitBtn" type="button">
+        <div class="btn-spinner" aria-hidden="true"></div>
+        <span class="btn-label">Send Reset Link</span>
+      </button>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      initAuthListener,
+      initPasswordToggle,
+      initForgotPasswordModal,
+      signInEmail,
+      signInGoogle,
+      showToast,
+      setButtonLoading,
+      showFieldError,
+      clearFieldError,
+      validateEmail,
+      friendlyError,
+    } from './auth.js';
+
+    /* ── Auth state — redirect if already logged in ─────────── */
+    initAuthListener();
+
+    /* ── DOM refs ───────────────────────────────────────────── */
+    const form          = document.getElementById('loginForm');
+    const emailInput    = document.getElementById('loginEmail');
+    const passwordInput = document.getElementById('loginPassword');
+    const rememberCheck = document.getElementById('rememberMe');
+    const loginBtn      = document.getElementById('loginBtn');
+    const googleBtn     = document.getElementById('googleBtn');
+    const pwToggle      = document.getElementById('loginPwToggle');
+    const forgotTrigger = document.getElementById('forgotPasswordBtn');
+    const emailError    = document.getElementById('loginEmailError');
+    const passwordError = document.getElementById('loginPasswordError');
+
+    /* ── Password toggle ────────────────────────────────────── */
+    initPasswordToggle(passwordInput, pwToggle);
+
+    /* ── Forgot password modal ──────────────────────────────── */
+    initForgotPasswordModal(forgotTrigger);
+
+    /* ── Inline error clearing on input ────────────────────── */
+    emailInput.addEventListener('input', () => clearFieldError(emailInput, emailError));
+    passwordInput.addEventListener('input', () => clearFieldError(passwordInput, passwordError));
+
+    /* ── Form submission ────────────────────────────────────── */
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      const email    = emailInput.value.trim();
+      const password = passwordInput.value;
+      const remember = rememberCheck.checked;
+      let hasError   = false;
+
+      clearFieldError(emailInput, emailError);
+      clearFieldError(passwordInput, passwordError);
+
+      if (!email) {
+        showFieldError(emailInput, emailError, 'Please enter your email address.');
+        hasError = true;
+      } else if (!validateEmail(email)) {
+        showFieldError(emailInput, emailError, 'Please enter a valid email address.');
+        hasError = true;
+      }
+
+      if (!password) {
+        showFieldError(passwordInput, passwordError, 'Please enter your password.');
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      setButtonLoading(loginBtn, true);
+      try {
+        await signInEmail(email, password, remember);
+        /* Redirect handled by onAuthStateChanged inside initAuthListener */
+      } catch (err) {
+        const msg = friendlyError(err.code);
+        /* Map auth errors to the correct field */
+        if (err.code === 'auth/invalid-email' || err.code === 'auth/user-not-found') {
+          showFieldError(emailInput, emailError, msg);
+        } else if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
+          showFieldError(passwordInput, passwordError, msg);
+        } else {
+          showToast(msg, 'error');
+        }
+      } finally {
+        setButtonLoading(loginBtn, false);
+      }
+    });
+
+    /* ── Google sign-in ─────────────────────────────────────── */
+    googleBtn.addEventListener('click', async () => {
+      googleBtn.disabled = true;
+      try {
+        await signInGoogle();
+        /* Redirect handled by onAuthStateChanged */
+      } catch (err) {
+        showToast(friendlyError(err.code), 'error');
+      } finally {
+        googleBtn.disabled = false;
+      }
+    });
   </script>
+
 </body>
 </html>

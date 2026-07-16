@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIRENT — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --mint:#31D7A9;--mint-light:#E8FBF6;--mint-mid:rgba(49,215,169,.12);
+      --text:#0F172A;--text-2:#64748B;--text-3:#94A3B8;
+      --border:#E5E7EB;--card:#fff;--bg:#FAFFFD;
+      --radius:20px;--radius-sm:12px;--pill:100px;
+      --font:'Plus Jakarta Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    html{-webkit-font-smoothing:antialiased}
+    body{
+      font-family:var(--font);background:linear-gradient(160deg,#EDFBF5 0%,var(--bg) 50%);
+      color:var(--text);min-height:100dvh;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;
+    }
+    .dm-shell{width:100%;max-width:420px;text-align:center}
+    .dm-wordmark{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:24px;display:block}
+    .dm-card{
+      background:var(--card);border-radius:var(--radius);
+      box-shadow:0 8px 40px rgba(49,215,169,.08),0 2px 12px rgba(0,0,0,.05);
+      border:1.5px solid rgba(49,215,169,.12);padding:40px 28px;
+      animation:cardEnter .45s var(--ease) both;
+    }
+    @keyframes cardEnter{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .dm-loader-wrap{display:flex;flex-direction:column;align-items:center;gap:20px;padding:12px 0}
+    .dm-ring{
+      width:48px;height:48px;border:3px solid rgba(49,215,169,.25);
+      border-top-color:var(--mint);border-radius:50%;animation:spin .7s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .dm-title{font-size:18px;font-weight:800}
+    .dm-sub{font-size:14px;color:var(--text-2);margin-top:6px;line-height:1.6}
+    .dm-error-card{display:none}
+    .dm-error-card.show{display:block}
+    .dm-error-icon{
+      width:56px;height:56px;border-radius:50%;background:rgba(239,68,68,.1);
+      display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#EF4444;
+    }
+    .dm-error-icon svg{width:28px;height:28px}
+    .dm-btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      padding:13px 28px;background:var(--mint);color:#fff;border:none;border-radius:var(--pill);
+      font-family:var(--font);font-size:14px;font-weight:700;cursor:pointer;margin-top:20px;
+      box-shadow:0 6px 24px rgba(49,215,169,.38);transition:background .22s,transform .2s;
+      text-decoration:none;
+    }
+    .dm-btn:hover{background:#28C99D;transform:translateY(-1px)}
+    .dm-role-badge{
+      display:inline-flex;align-items:center;gap:6px;padding:6px 16px;
+      background:var(--mint-light);border:1.5px solid rgba(49,215,169,.25);border-radius:var(--pill);
+      font-size:13px;font-weight:700;color:var(--mint);margin-top:12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dm-shell">
+    <span class="dm-wordmark">HIRENT</span>
+    <div class="dm-card" id="dmCard">
+      <!-- Loading state -->
+      <div class="dm-loader-wrap" id="dmLoading">
+        <div class="dm-ring"></div>
+        <div>
+          <p class="dm-title">Setting up your dashboard…</p>
+          <p class="dm-sub">We're preparing your personalized workspace.</p>
+        </div>
+      </div>
+      <!-- Error state -->
+      <div class="dm-error-card" id="dmError">
+        <div class="dm-error-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17v.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </div>
+        <p class="dm-title" id="dmErrorTitle">Unable to load dashboard</p>
+        <p class="dm-sub" id="dmErrorMsg">Please try again or log in to continue.</p>
+        <a href="login.html" class="dm-btn">Go to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { auth, db } from './firebase.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+    /* ── Map role → dashboard file ──────────────────────────── */
+    const ROLE_DASHBOARDS = {
+      'Freelancer': 'freelancer-dashboard.html',
+      'Client':     'client-dashboard.html',
+      'Startup':    'startup-dashboard.html',
+      'Agency':     'agency-dashboard.html',
+      'Admin':      'admin-dashboard.html',
+    };
+
+    const loading = document.getElementById('dmLoading');
+    const errorBox = document.getElementById('dmError');
+    const errorTitle = document.getElementById('dmErrorTitle');
+    const errorMsg   = document.getElementById('dmErrorMsg');
+
+    function showError(title, msg, showLoginBtn = true) {
+      loading.style.display = 'none';
+      errorBox.classList.add('show');
+      errorTitle.textContent = title;
+      errorMsg.textContent = msg;
+    }
+
+    /* ── Auth state → load role → redirect ──────────────────── */
+    onAuthStateChanged(auth, async user => {
+      if (!user) {
+        window.location.replace('login.html');
+        return;
+      }
+
+      try {
+        const snap = await getDoc(doc(db, 'users', user.uid));
+        if (!snap.exists()) {
+          showError('Profile not found', 'Your user profile does not exist yet. Please complete onboarding.', true);
+          return;
+        }
+        const data = snap.data();
+        const role = (data.role || '').trim();
+
+        if (!role) {
+          /* No role stored — send back to onboarding */
+          window.location.replace('onboarding.html');
+          return;
+        }
+
+        const target = ROLE_DASHBOARDS[role];
+        if (target) {
+          window.location.replace(target);
+        } else {
+          /* Future roles: graceful fallback */
+          showError(
+            'Dashboard coming soon',
+            `Your role "${role}" does not have a dashboard yet. It will be available soon.`,
+            false,
+          );
+        }
+      } catch (err) {
+        showError('Connection error', 'We could not reach the database. Please check your connection and try again.', true);
+      }
+    });
+  </script>
+</body>
+</html>
