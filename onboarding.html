@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIRENT — Get Started</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="onboarding.css" />
+</head>
+<body>
+
+  <!-- ═══════════════ SHELL ═══════════════ -->
+  <div class="ob-shell">
+
+    <!-- Top Bar -->
+    <header class="ob-topbar">
+      <span class="ob-wordmark">HIRENT</span>
+      <span class="ob-step-label" id="stepLabel">Step 1 of 6</span>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="ob-progress-track">
+      <div class="ob-progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- Steps Container -->
+    <main class="ob-main" id="obMain">
+
+      <!-- ═════ STEP 1 — Role ═════ -->
+      <section class="ob-step" id="step1" data-step="1">
+        <div class="ob-card">
+          <div class="ob-card-inner">
+            <div class="ob-heading-group">
+              <h1 class="ob-title">Welcome to Hirent! 👋</h1>
+              <p class="ob-subtitle">Let's personalize your experience<br>so we can help you get the most out of Hirent.</p>
+            </div>
+
+            <div class="role-grid" id="roleGrid">
+              <button class="role-card" data-value="Freelancer" type="button">
+                <div class="role-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="role-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="9" r="5" stroke="currentColor" stroke-width="1.8"/><path d="M4 24c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </div>
+                <span class="role-name">Freelancer</span>
+                <span class="role-desc">I'm looking for work<br>and projects</span>
+              </button>
+              <button class="role-card" data-value="Client" type="button">
+                <div class="role-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="role-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><rect x="4" y="8" width="20" height="14" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M9 8V6a5 5 0 0110 0v2" stroke="currentColor" stroke-width="1.8"/></svg>
+                </div>
+                <span class="role-name">Client</span>
+                <span class="role-desc">I'm looking to hire<br>talent</span>
+              </button>
+              <button class="role-card" data-value="Startup" type="button">
+                <div class="role-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="role-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><path d="M14 4l2.5 5 5.5.8-4 3.9.95 5.5L14 16.5 9.05 19.2 10 13.7 6 9.8l5.5-.8L14 4z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                </div>
+                <span class="role-name">Startup</span>
+                <span class="role-desc">I'm building a startup<br>and need help</span>
+              </button>
+              <button class="role-card" data-value="Agency" type="button">
+                <div class="role-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="role-icon">
+                  <svg viewBox="0 0 28 28" fill="none"><circle cx="9" cy="10" r="4" stroke="currentColor" stroke-width="1.8"/><circle cx="19" cy="10" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M2 24c0-3.866 3.134-7 7-7M26 24c0-3.866-3.134-7-7-7M14 17c-2.761 0-5 2.239-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </div>
+                <span class="role-name">Agency</span>
+                <span class="role-desc">I run an agency<br>or a team</span>
+              </button>
+            </div>
+          </div>
+          <div class="ob-card-footer">
+            <button class="ob-continue-btn" id="continueStep1" disabled type="button">
+              Continue <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ STEP 2 — Looking For ═════ -->
+      <section class="ob-step ob-step--hidden" id="step2" data-step="2">
+        <div class="ob-card">
+          <div class="ob-card-inner">
+            <button class="ob-back-btn" id="backStep2" type="button">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="ob-heading-group">
+              <h1 class="ob-title">What are you looking for?</h1>
+              <p class="ob-subtitle">Select all that apply.</p>
+            </div>
+
+            <div class="looking-grid" id="lookingGrid">
+              <button class="looking-card" data-value="Full-time" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><rect x="2" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 5V4a4 4 0 018 0v1" stroke="currentColor" stroke-width="1.8"/></svg>
+                  </div>
+                  <span>Full-time</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="looking-card" data-value="Internship" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <span>Internship</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="looking-card" data-value="Part-time" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M11 7v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </div>
+                  <span>Part-time</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="looking-card" data-value="Remote Work" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="4" stroke="currentColor" stroke-width="1.8"/><path d="M2 11h2M18 11h2M11 2v2M11 18v2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  </div>
+                  <span>Remote Work</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="looking-card" data-value="Freelance Projects" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V8l-4-6z" stroke="currentColor" stroke-width="1.8"/><path d="M14 2v6h6" stroke="currentColor" stroke-width="1.8"/></svg>
+                  </div>
+                  <span>Freelance Projects</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="looking-card" data-value="Contract Work" type="button">
+                <div class="looking-card-left">
+                  <div class="looking-icon">
+                    <svg viewBox="0 0 22 22" fill="none"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </div>
+                  <span>Contract Work</span>
+                </div>
+                <div class="looking-check"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+            </div>
+          </div>
+          <div class="ob-card-footer">
+            <button class="ob-continue-btn" id="continueStep2" disabled type="button">
+              Continue <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ STEP 3 — Skills ═════ -->
+      <section class="ob-step ob-step--hidden" id="step3" data-step="3">
+        <div class="ob-card">
+          <div class="ob-card-inner">
+            <button class="ob-back-btn" id="backStep3" type="button">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="ob-heading-group">
+              <h1 class="ob-title">What are your primary skills?</h1>
+              <p class="ob-subtitle">Add the skills you're best at.</p>
+            </div>
+
+            <div class="skills-search-wrap">
+              <svg class="skills-search-icon" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.8"/><path d="M15 15l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              <input class="skills-search-input" id="skillsSearch" type="text" placeholder="Search skills..." autocomplete="off" />
+            </div>
+
+            <!-- Selected skill chips -->
+            <div class="selected-skills-row" id="selectedSkillsRow" aria-live="polite"></div>
+
+            <div class="popular-skills-section">
+              <span class="popular-label">Popular skills</span>
+              <div class="popular-chips" id="popularChips">
+                <!-- rendered by JS -->
+              </div>
+            </div>
+
+            <!-- Search results (hidden until user types) -->
+            <div class="skills-search-results" id="skillsSearchResults" hidden></div>
+
+            <p class="skills-limit-note" id="skillsLimitNote"></p>
+          </div>
+          <div class="ob-card-footer">
+            <button class="ob-continue-btn" id="continueStep3" disabled type="button">
+              Continue <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ STEP 4 — Experience ═════ -->
+      <section class="ob-step ob-step--hidden" id="step4" data-step="4">
+        <div class="ob-card">
+          <div class="ob-card-inner">
+            <button class="ob-back-btn" id="backStep4" type="button">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="ob-heading-group">
+              <h1 class="ob-title">What's your experience level?</h1>
+              <p class="ob-subtitle">This helps clients know what to expect.</p>
+            </div>
+
+            <div class="exp-list" id="expList">
+              <button class="exp-card" data-value="Beginner" type="button">
+                <div class="exp-card-left">
+                  <div class="exp-bars">
+                    <span class="bar bar--1 bar--active"></span>
+                    <span class="bar bar--2"></span>
+                    <span class="bar bar--3"></span>
+                    <span class="bar bar--4"></span>
+                  </div>
+                  <div class="exp-text">
+                    <span class="exp-name">Beginner</span>
+                    <span class="exp-desc">I'm just getting started</span>
+                  </div>
+                </div>
+                <div class="exp-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="exp-card" data-value="Intermediate" type="button">
+                <div class="exp-card-left">
+                  <div class="exp-bars">
+                    <span class="bar bar--1 bar--active"></span>
+                    <span class="bar bar--2 bar--active"></span>
+                    <span class="bar bar--3"></span>
+                    <span class="bar bar--4"></span>
+                  </div>
+                  <div class="exp-text">
+                    <span class="exp-name">Intermediate</span>
+                    <span class="exp-desc">I have some experience</span>
+                  </div>
+                </div>
+                <div class="exp-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="exp-card" data-value="Professional" type="button">
+                <div class="exp-card-left">
+                  <div class="exp-bars">
+                    <span class="bar bar--1 bar--active"></span>
+                    <span class="bar bar--2 bar--active"></span>
+                    <span class="bar bar--3 bar--active"></span>
+                    <span class="bar bar--4"></span>
+                  </div>
+                  <div class="exp-text">
+                    <span class="exp-name">Professional</span>
+                    <span class="exp-desc">I work on projects independently</span>
+                  </div>
+                </div>
+                <div class="exp-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+              <button class="exp-card" data-value="Expert" type="button">
+                <div class="exp-card-left">
+                  <div class="exp-bars">
+                    <span class="bar bar--1 bar--active"></span>
+                    <span class="bar bar--2 bar--active"></span>
+                    <span class="bar bar--3 bar--active"></span>
+                    <span class="bar bar--4 bar--active"></span>
+                  </div>
+                  <div class="exp-text">
+                    <span class="exp-name">Expert</span>
+                    <span class="exp-desc">I have extensive experience</span>
+                  </div>
+                </div>
+                <div class="exp-check"><svg viewBox="0 0 20 20" fill="none"><path d="M5 10.5l3.5 3.5 6.5-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+              </button>
+            </div>
+          </div>
+          <div class="ob-card-footer">
+            <button class="ob-continue-btn" id="continueStep4" disabled type="button">
+              Continue <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ STEP 5 — Location ═════ -->
+      <section class="ob-step ob-step--hidden" id="step5" data-step="5">
+        <div class="ob-card">
+          <div class="ob-card-inner">
+            <button class="ob-back-btn" id="backStep5" type="button">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M12 4L6 10l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="ob-heading-group">
+              <h1 class="ob-title">Where are you based?</h1>
+              <p class="ob-subtitle">This helps us show you relevant opportunities.</p>
+            </div>
+
+            <div class="location-fields">
+              <div class="select-wrap">
+                <div class="select-icon">
+                  <svg viewBox="0 0 20 20" fill="none"><path d="M10 11a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.8"/><path d="M10 2C6.686 2 4 4.686 4 8c0 4.5 6 10 6 10s6-5.5 6-10c0-3.314-2.686-6-6-6z" stroke="currentColor" stroke-width="1.8"/></svg>
+                </div>
+                <select class="ob-select" id="countrySelect">
+                  <option value="" disabled selected>Select your country</option>
+                  <option>Afghanistan</option><option>Albania</option><option>Algeria</option><option>Argentina</option>
+                  <option>Australia</option><option>Austria</option><option>Bangladesh</option><option>Belgium</option>
+                  <option>Brazil</option><option>Canada</option><option>Chile</option><option>China</option>
+                  <option>Colombia</option><option>Croatia</option><option>Czech Republic</option><option>Denmark</option>
+                  <option>Egypt</option><option>Ethiopia</option><option>Finland</option><option>France</option>
+                  <option>Germany</option><option>Ghana</option><option>Greece</option><option>Hungary</option>
+                  <option>India</option><option>Indonesia</option><option>Iran</option><option>Iraq</option>
+                  <option>Ireland</option><option>Israel</option><option>Italy</option><option>Japan</option>
+                  <option>Jordan</option><option>Kenya</option><option>Malaysia</option><option>Mexico</option>
+                  <option>Morocco</option><option>Nepal</option><option>Netherlands</option><option>New Zealand</option>
+                  <option>Nigeria</option><option>Norway</option><option>Pakistan</option><option>Philippines</option>
+                  <option>Poland</option><option>Portugal</option><option>Romania</option><option>Russia</option>
+                  <option>Saudi Arabia</option><option>Singapore</option><option>South Africa</option><option>South Korea</option>
+                  <option>Spain</option><option>Sri Lanka</option><option>Sweden</option><option>Switzerland</option>
+                  <option>Thailand</option><option>Turkey</option><option>Ukraine</option><option>United Arab Emirates</option>
+                  <option>United Kingdom</option><option>United States</option><option>Vietnam</option>
+                </select>
+                <div class="select-chevron">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+
+              <div class="select-wrap">
+                <div class="select-icon">
+                  <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M2 8h16M7 3v5M13 3v5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                </div>
+                <input class="ob-select ob-input" id="cityInput" type="text" placeholder="Select your city (optional)" />
+                <div class="select-chevron">
+                  <svg viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ob-card-footer">
+            <button class="ob-continue-btn" id="continueStep5" disabled type="button">
+              Continue <svg viewBox="0 0 20 20" fill="none"><path d="M4 10h12M10 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═════ STEP 6 — Success ═════ -->
+      <section class="ob-step ob-step--hidden" id="step6" data-step="6">
+        <div class="ob-card ob-card--success">
+          <div class="ob-card-inner ob-card-inner--center">
+            <div class="success-constellation" id="successConstellation" aria-hidden="true">
+              <!-- dots rendered by JS -->
+            </div>
+
+            <div class="success-ring">
+              <div class="success-check-wrap" id="successCheckWrap">
+                <svg class="success-check-svg" viewBox="0 0 52 52" fill="none">
+                  <circle class="success-circle" cx="26" cy="26" r="24" stroke="#31D7A9" stroke-width="3"/>
+                  <path class="success-tick" d="M15 26l8 8 14-14" stroke="#31D7A9" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="success-text">
+              <h1 class="ob-title ob-title--success">You're all set! 🎉</h1>
+              <p class="ob-subtitle">Let's create your account so you can<br>start your journey with Hirent.</p>
+            </div>
+
+            <div class="success-actions">
+              <a href="login.html" class="ob-continue-btn success-btn-primary">
+                Create Account
+              </a>
+              <a href="login.html" class="success-btn-secondary">
+                I already have an account
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main><!-- /ob-main -->
+  </div><!-- /ob-shell -->
+
+  <script type="module" src="onboarding.js"></script>
+</body>
+</html>

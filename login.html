@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HIRENT — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --mint:#31D7A9;--mint-2:#A7F3E5;--mint-accent:#7EEAD3;--mint-light:#E8FBF6;
+      --text:#0F172A;--text-2:#64748B;--border:#E5E7EB;--card:#fff;
+      --shadow:0 8px 40px rgba(49,215,169,.08),0 2px 8px rgba(0,0,0,.05);
+      --radius:20px;--pill:100px;
+      --font:'Plus Jakarta Sans',system-ui,sans-serif;
+      --ease:cubic-bezier(.4,0,.2,1);
+    }
+    html{-webkit-font-smoothing:antialiased}
+    body{
+      font-family:var(--font);background:linear-gradient(160deg,#f0fdf8 0%,#fafffd 60%);
+      color:var(--text);min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px;
+    }
+    .login-card{
+      background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+      border:1.5px solid rgba(49,215,169,.12);padding:40px 32px;width:100%;max-width:400px;
+      text-align:center;
+    }
+    .login-wordmark{font-size:20px;font-weight:800;letter-spacing:-.03em;margin-bottom:24px;display:block}
+    .login-title{font-size:24px;font-weight:800;margin-bottom:8px}
+    .login-sub{font-size:14px;color:var(--text-2);margin-bottom:28px}
+    .login-field{margin-bottom:14px;text-align:left}
+    .login-label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+    .login-input{
+      width:100%;padding:13px 16px;border:1.5px solid var(--border);border-radius:12px;
+      font-family:var(--font);font-size:14px;color:var(--text);outline:none;
+      transition:border-color .2s,box-shadow .2s;
+    }
+    .login-input:focus{border-color:var(--mint);box-shadow:0 0 0 4px rgba(49,215,169,.18)}
+    .login-btn{
+      width:100%;padding:15px;background:var(--mint);color:#fff;border:none;border-radius:var(--pill);
+      font-family:var(--font);font-size:15px;font-weight:700;cursor:pointer;margin-top:8px;
+      box-shadow:0 6px 24px rgba(49,215,169,.35);transition:background .22s,transform .2s;
+    }
+    .login-btn:hover{background:#28C99D;transform:translateY(-1px)}
+    .login-divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--text-2);font-size:12px}
+    .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .login-link{display:block;text-align:center;font-size:14px;color:var(--text-2);text-decoration:none;margin-top:18px;transition:color .2s}
+    .login-link:hover{color:var(--mint)}
+    .login-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2);text-decoration:none;margin-top:24px;transition:color .2s}
+    .login-back:hover{color:var(--mint)}
+  </style>
+</head>
+<body>
+  <div class="login-card">
+    <span class="login-wordmark">HIRENT</span>
+    <h1 class="login-title">Welcome back</h1>
+    <p class="login-sub">Log in to continue your journey.</p>
+    <form id="loginForm" onsubmit="return false">
+      <div class="login-field">
+        <label class="login-label" for="email">Email</label>
+        <input class="login-input" id="email" type="email" placeholder="you@example.com" autocomplete="email" />
+      </div>
+      <div class="login-field">
+        <label class="login-label" for="password">Password</label>
+        <input class="login-input" id="password" type="password" placeholder="Enter your password" autocomplete="current-password" />
+      </div>
+      <button class="login-btn" type="submit">Log In</button>
+    </form>
+    <div class="login-divider">or</div>
+    <a href="#" class="login-link">Forgot password?</a>
+    <a href="index.html" class="login-back">← Back to home</a>
+  </div>
+  <script>
+    /* Placeholder — Firebase auth will be wired here later */
+  </script>
+</body>
+</html>
