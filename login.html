@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="auth.css" />
 </head>
-<body>
+<body data-page="login">
 
   <!-- Page loader — shown until auth state resolves -->
   <div class="page-loader" id="pageLoader" aria-hidden="true">
@@ -240,105 +240,7 @@
     </div>
   </div>
 
-  <script type="module">
-    import {
-      initAuthListener,
-      initPasswordToggle,
-      initForgotPasswordModal,
-      signInEmail,
-      signInGoogle,
-      showToast,
-      setButtonLoading,
-      showFieldError,
-      clearFieldError,
-      validateEmail,
-      friendlyError,
-    } from './auth.js';
-
-    /* ── Auth state — redirect if already logged in ─────────── */
-    initAuthListener();
-
-    /* ── DOM refs ───────────────────────────────────────────── */
-    const form          = document.getElementById('loginForm');
-    const emailInput    = document.getElementById('loginEmail');
-    const passwordInput = document.getElementById('loginPassword');
-    const rememberCheck = document.getElementById('rememberMe');
-    const loginBtn      = document.getElementById('loginBtn');
-    const googleBtn     = document.getElementById('googleBtn');
-    const pwToggle      = document.getElementById('loginPwToggle');
-    const forgotTrigger = document.getElementById('forgotPasswordBtn');
-    const emailError    = document.getElementById('loginEmailError');
-    const passwordError = document.getElementById('loginPasswordError');
-
-    /* ── Password toggle ────────────────────────────────────── */
-    initPasswordToggle(passwordInput, pwToggle);
-
-    /* ── Forgot password modal ──────────────────────────────── */
-    initForgotPasswordModal(forgotTrigger);
-
-    /* ── Inline error clearing on input ────────────────────── */
-    emailInput.addEventListener('input', () => clearFieldError(emailInput, emailError));
-    passwordInput.addEventListener('input', () => clearFieldError(passwordInput, passwordError));
-
-    /* ── Form submission ────────────────────────────────────── */
-    form.addEventListener('submit', async e => {
-      e.preventDefault();
-
-      const email    = emailInput.value.trim();
-      const password = passwordInput.value;
-      const remember = rememberCheck.checked;
-      let hasError   = false;
-
-      clearFieldError(emailInput, emailError);
-      clearFieldError(passwordInput, passwordError);
-
-      if (!email) {
-        showFieldError(emailInput, emailError, 'Please enter your email address.');
-        hasError = true;
-      } else if (!validateEmail(email)) {
-        showFieldError(emailInput, emailError, 'Please enter a valid email address.');
-        hasError = true;
-      }
-
-      if (!password) {
-        showFieldError(passwordInput, passwordError, 'Please enter your password.');
-        hasError = true;
-      }
-
-      if (hasError) return;
-
-      setButtonLoading(loginBtn, true);
-      try {
-        await signInEmail(email, password, remember);
-        /* Redirect handled by onAuthStateChanged inside initAuthListener */
-      } catch (err) {
-        const msg = friendlyError(err.code);
-        /* Map auth errors to the correct field */
-        if (err.code === 'auth/invalid-email' || err.code === 'auth/user-not-found') {
-          showFieldError(emailInput, emailError, msg);
-        } else if (err.code === 'auth/wrong-password' || err.code === 'auth/invalid-credential') {
-          showFieldError(passwordInput, passwordError, msg);
-        } else {
-          showToast(msg, 'error');
-        }
-      } finally {
-        setButtonLoading(loginBtn, false);
-      }
-    });
-
-    /* ── Google sign-in ─────────────────────────────────────── */
-    googleBtn.addEventListener('click', async () => {
-      googleBtn.disabled = true;
-      try {
-        await signInGoogle();
-        /* Redirect handled by onAuthStateChanged */
-      } catch (err) {
-        showToast(friendlyError(err.code), 'error');
-      } finally {
-        googleBtn.disabled = false;
-      }
-    });
-  </script>
+  <script type="module" src="authentication.js"></script>
 
 </body>
 </html>

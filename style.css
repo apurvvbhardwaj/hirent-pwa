@@ -454,6 +454,26 @@ body {
 .feature-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
 .feature-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
 
+/* Learn more link inside feature cards */
+.feature-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+  transition: gap .2s, color .2s;
+}
+.feature-learn-more svg { transition: transform .2s; }
+.feature-learn-more:hover { gap: 7px; color: var(--accent-hover); }
+.feature-learn-more:hover svg { transform: translateX(2px); }
+
 /* ═══════════════════════════════════════════════════════════════
    BUILT FOR EVERYONE
    ═══════════════════════════════════════════════════════════════ */
@@ -487,7 +507,7 @@ body {
 
 .persona-illus-ph {
   width: 90px; height: 90px; border-radius: 50%;
-  display: flex; align-items: flex-end; justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden; position: relative;
 }
 .persona-illus-1 { background: linear-gradient(160deg, #d4f0e5, #a8e6cc); }
@@ -495,10 +515,28 @@ body {
 .persona-illus-3 { background: linear-gradient(160deg, #ffe0cc, #ffc5a0); }
 .persona-illus-4 { background: linear-gradient(160deg, #e0d4f0, #c5a8e6); }
 
-.persona-figure-ph {
-  width: 58px; height: 64px;
-  border-radius: 12px 12px 0 0;
-  background: rgba(255,255,255,.4);
+/* Real face image fills the circle */
+.persona-face {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Small icon badge overlapping bottom-right of the avatar */
+.persona-icon-badge {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .persona-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
@@ -626,6 +664,52 @@ body {
 
 .author-name { font-size: 14px; font-weight: 700; }
 .author-role { font-size: 12px; color: var(--text-secondary); }
+
+/* Real face avatar (image-based) */
+.author-face {
+  object-fit: cover;
+  display: block;
+}
+
+/* View more testimonials */
+.testimonials-view-more {
+  text-align: center;
+  margin-top: 40px;
+}
+.view-more-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  font-family: var(--font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color .2s, color .2s, box-shadow .2s, background .2s;
+}
+.view-more-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: #f2fff9;
+  box-shadow: 0 4px 16px rgba(46,217,160,.12);
+}
+.view-more-btn svg { transition: transform .3s; }
+.view-more-btn.expanded svg { transform: rotate(180deg); }
+
+/* Additional testimonials grid reveal */
+.testimonials-grid--more[hidden] { display: none; }
+.testimonials-grid--more {
+  margin-top: 24px;
+  animation: fadeUpReveal .5s var(--ease, cubic-bezier(.4,0,.2,1)) both;
+}
+@keyframes fadeUpReveal {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ═══════════════════════════════════════════════════════════════
    FAQ

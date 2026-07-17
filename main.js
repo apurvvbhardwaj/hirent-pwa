@@ -87,13 +87,13 @@
   /* Navigate to onboarding (default) or dashboard (when logged in) */
   ctaBtn.addEventListener('click', () => {
     if (ctaBtn.dataset.loggedIn === 'true') {
-      window.location.href = 'dashboard.html';
+      window.location.href = 'dashboard-manager.html';
     } else {
       window.location.href = 'onboarding.html';
     }
   });
 
-  /* Expose for future auth integration */
+  /* Expose for auth integration */
   window.__HirentSetCtaLoggedIn = setCtaLoggedIn;
 })();
 
@@ -147,3 +147,63 @@
     });
   });
 })();
+
+/* ── View More Testimonials ──────────────────────────────────── */
+(function () {
+  const viewMoreBtn = document.getElementById('viewMoreBtn');
+  const moreGrid    = document.getElementById('moreTestimonials');
+  if (!viewMoreBtn || !moreGrid) return;
+
+  const arrowSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  viewMoreBtn.addEventListener('click', () => {
+    const isHidden = moreGrid.hasAttribute('hidden');
+    if (isHidden) {
+      moreGrid.removeAttribute('hidden');
+      viewMoreBtn.classList.add('expanded');
+      viewMoreBtn.innerHTML = 'Show fewer testimonials ' + arrowSvg;
+
+      /* Re-trigger fade-up observer on newly revealed cards */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      moreGrid.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    } else {
+      moreGrid.setAttribute('hidden', '');
+      viewMoreBtn.classList.remove('expanded');
+      viewMoreBtn.innerHTML = 'View more testimonials ' + arrowSvg;
+    }
+  });
+})();
+
+/* ── Feature Card "Learn more" placeholder buttons ───────────── */
+(function () {
+  document.querySelectorAll('.feature-learn-more').forEach(btn => {
+    btn.addEventListener('click', () => {
+      /* PLACEHOLDER: Wire to feature detail pages / modals here */
+    });
+  });
+})();
+
+/* ── Landing Page Auth Integration ───────────────────────────── */
+/* Check Firebase auth state on the landing page. If the user is
+   logged in, swap the CTA button from "Begin Your Journey" to
+   "Go To Dashboard" via the exposed hook. This does NOT redirect —
+   it only updates the button so the user can choose to navigate. */
+import('./firebase.js')
+  .then(({ auth }) => import('https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js')
+    .then(({ onAuthStateChanged }) => {
+      onAuthStateChanged(auth, user => {
+        if (user && typeof window.__HirentSetCtaLoggedIn === 'function') {
+          window.__HirentSetCtaLoggedIn();
+        }
+      });
+    }))
+  .catch(() => {
+    /* firebase.js not configured yet — landing page stays in default state */
+  });
