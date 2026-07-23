@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#31D7A9" />
+  <title>HIRENT — Freelancer Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard.css" />
+</head>
+<body data-page="dashboard">
+
+  <!-- ═══ PULL TO REFRESH ═══════════════════════════════════════ -->
+  <div id="ptrIndicator" class="ptr-indicator" aria-hidden="true">
+    <div class="ptr-spinner"></div>
+  </div>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+  <header class="dash-header">
+    <button class="icon-btn" id="hamburgerBtn" aria-label="Open menu">
+      <i data-lucide="menu"></i>
+    </button>
+    <button class="search-bar" id="searchBar" aria-label="Search">
+      <i data-lucide="search" class="search-icon"></i>
+      <span class="search-placeholder" id="searchPlaceholder">Search freelancers...</span>
+    </button>
+    <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+      <i data-lucide="bell"></i>
+      <span class="notif-badge" id="notifBadge" hidden></span>
+    </button>
+    <button class="avatar-btn" id="profileBtn" aria-label="Profile">
+      <img class="avatar-img" id="headerAvatar" src="" alt="" />
+      <span class="avatar-fallback" id="avatarFallback">U</span>
+    </button>
+  </header>
+
+  <!-- ═══ HAMBURGER DRAWER ══════════════════════════════════════ -->
+  <div class="drawer-overlay" id="drawerOverlay" hidden></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <span class="drawer-title">Menu</span>
+      <button class="icon-btn" id="drawerClose" aria-label="Close menu">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <nav class="drawer-nav">
+      <a href="freelancer-dashboard.html" class="drawer-item active"><i data-lucide="home"></i> Home</a>
+      <a href="explore.html" class="drawer-item"><i data-lucide="compass"></i> Explore</a>
+      <a href="vault.html" class="drawer-item"><i data-lucide="shield"></i> Vault</a>
+      <a href="applications.html" class="drawer-item"><i data-lucide="briefcase"></i> Applications</a>
+      <a href="pitch.html" class="drawer-item"><i data-lucide="sparkles"></i> AI Pitch</a>
+      <a href="profile.html" class="drawer-item"><i data-lucide="user"></i> Profile</a>
+      <a href="pricing.html" class="drawer-item"><i data-lucide="crown"></i> Upgrade to Pro</a>
+      <a href="support.html" class="drawer-item"><i data-lucide="life-buoy"></i> Support</a>
+      <a href="referral.html" class="drawer-item"><i data-lucide="gift"></i> Referral</a>
+    </nav>
+    <button class="drawer-logout" id="drawerLogout">
+      <i data-lucide="log-out"></i> Logout
+    </button>
+  </aside>
+
+  <!-- ═══ MAIN SCROLL AREA ══════════════════════════════════════ -->
+  <main class="dash-scroll" id="dashScroll">
+
+    <!-- Smart Banner Carousel -->
+    <section class="banner-section" aria-label="Announcements">
+      <div class="banner-track" id="bannerTrack">
+        <div class="banner-slide" data-href="pricing.html" style="background:linear-gradient(135deg,#31D7A9,#1BAA8B)">
+          <div class="banner-content">
+            <p class="banner-eyebrow">Limited Offer</p>
+            <h3 class="banner-title">Upgrade to Pro — 50% OFF</h3>
+            <button class="banner-cta" data-href="pricing.html">Upgrade Now</button>
+          </div>
+        </div>
+        <div class="banner-slide" data-href="explore.html" style="background:linear-gradient(135deg,#6366F1,#4F46E5)">
+          <div class="banner-content">
+            <p class="banner-eyebrow">New Jobs</p>
+            <h3 class="banner-title">12 new jobs match your skills</h3>
+            <button class="banner-cta" data-href="explore.html">Explore Jobs</button>
+          </div>
+        </div>
+        <div class="banner-slide" data-href="pitch.html" style="background:linear-gradient(135deg,#F59E0B,#D97706)">
+          <div class="banner-content">
+            <p class="banner-eyebrow">AI Tool</p>
+            <h3 class="banner-title">Generate your perfect pitch</h3>
+            <button class="banner-cta" data-href="pitch.html">Try Now</button>
+          </div>
+        </div>
+        <div class="banner-slide" data-href="vault.html" style="background:linear-gradient(135deg,#0EA5E9,#0284C7)">
+          <div class="banner-content">
+            <p class="banner-eyebrow">Vault</p>
+            <h3 class="banner-title">Secure your deals in the Vault</h3>
+            <button class="banner-cta" data-href="vault.html">Open Vault</button>
+          </div>
+        </div>
+        <div class="banner-slide" data-href="referral.html" style="background:linear-gradient(135deg,#EC4899,#DB2777)">
+          <div class="banner-content">
+            <p class="banner-eyebrow">Refer & Earn</p>
+            <h3 class="banner-title">Invite friends, earn rewards</h3>
+            <button class="banner-cta" data-href="referral.html">Invite Friends</button>
+          </div>
+        </div>
+      </div>
+      <div class="banner-dots" id="bannerDots"></div>
+    </section>
+
+    <!-- Hirent Vault -->
+    <section class="card vault-card fade-up" id="vaultCard" data-href="vault.html">
+      <div class="vault-header">
+        <div class="vault-logo">
+          <i data-lucide="shield"></i>
+          <span>Hirent Vault</span>
+        </div>
+        <i data-lucide="chevron-right" class="vault-chevron"></i>
+      </div>
+      <div class="vault-grid">
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="vaultActive">0</span>
+          <span class="vault-stat-label">Active Deals</span>
+        </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="vaultCompleted">0</span>
+          <span class="vault-stat-label">Completed</span>
+        </div>
+        <div class="vault-stat">
+          <span class="vault-stat-num" id="vaultDisputed">0</span>
+          <span class="vault-stat-label">Disputed</span>
+        </div>
+        <div class="vault-stat vault-earnings">
+          <span class="vault-stat-num" id="vaultEarnings">$0</span>
+          <span class="vault-stat-label">Total Earnings</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Today's Focus -->
+    <section class="card focus-card fade-up" id="focusCard">
+      <div class="card-header">
+        <h2 class="card-title">Today's Focus</h2>
+        <span class="focus-date" id="focusDate"></span>
+      </div>
+      <div class="focus-tasks" id="focusTasks">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </div>
+      <div class="focus-xp-bar">
+        <div class="focus-xp-fill" id="focusXpFill" style="width:0%"></div>
+      </div>
+      <p class="focus-xp-text" id="focusXpText">0 / 0 XP today</p>
+    </section>
+
+    <!-- Profile Completion -->
+    <section class="card profile-completion-card fade-up" data-href="profile.html">
+      <div class="pc-top">
+        <div class="pc-ring" id="pcRing">
+          <svg viewBox="0 0 100 100" class="pc-ring-svg">
+            <circle class="pc-ring-bg" cx="50" cy="50" r="42" />
+            <circle class="pc-ring-fg" cx="50" cy="50" r="42" id="pcRingCircle" />
+          </svg>
+          <span class="pc-ring-pct" id="pcPct">0%</span>
+        </div>
+        <div class="pc-info">
+          <h3 class="pc-title">Profile Completion</h3>
+          <p class="pc-sub" id="pcSub">Complete your profile to get more matches</p>
+        </div>
+      </div>
+      <button class="card-btn" id="pcCompleteBtn" data-href="profile.html">Complete Now</button>
+    </section>
+
+    <!-- Score Cards Row -->
+    <div class="score-row">
+      <section class="card score-card fade-up" data-href="hirent-score.html">
+        <div class="score-icon mint"><i data-lucide="gauge"></i></div>
+        <span class="score-num" id="hirentScore">0</span>
+        <span class="score-label">Hirent Score</span>
+      </section>
+      <section class="card score-card fade-up" data-href="confidence-score.html">
+        <div class="score-icon blue"><i data-lucide="trending-up"></i></div>
+        <span class="score-num" id="confidenceScore">0</span>
+        <span class="score-label">Confidence Score</span>
+      </section>
+    </div>
+
+    <!-- Daily XP -->
+    <section class="card xp-card fade-up">
+      <div class="card-header">
+        <h2 class="card-title">Daily XP</h2>
+        <i data-lucide="zap" class="xp-icon"></i>
+      </div>
+      <div class="xp-progress-ring" id="xpRing">
+        <svg viewBox="0 0 120 120" class="xp-ring-svg">
+          <circle class="xp-ring-bg" cx="60" cy="60" r="52" />
+          <circle class="xp-ring-fg" cx="60" cy="60" r="52" id="xpRingCircle" />
+        </svg>
+        <div class="xp-ring-center">
+          <span class="xp-ring-num" id="xpNum">0</span>
+          <span class="xp-ring-label">XP</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Streak & Level Row -->
+    <div class="streak-level-row">
+      <section class="card streak-card fade-up" id="streakCard">
+        <div class="streak-flame"><i data-lucide="flame"></i></div>
+        <span class="streak-num" id="streakNum">0</span>
+        <span class="streak-label">Day Streak</span>
+      </section>
+      <section class="card level-card fade-up" data-href="level.html">
+        <div class="level-badge" id="levelBadge">L1</div>
+        <span class="level-num" id="levelTitle">Newcomer</span>
+        <span class="level-sub">Tap to view badges</span>
+      </section>
+    </div>
+
+    <!-- Quick Actions -->
+    <section class="card quick-actions-card fade-up">
+      <h2 class="card-title">Quick Actions</h2>
+      <div class="qa-grid">
+        <button class="qa-item" data-href="applications.html">
+          <div class="qa-icon mint"><i data-lucide="send"></i></div>
+          <span>Apply</span>
+        </button>
+        <button class="qa-item" data-href="pitch.html">
+          <div class="qa-icon purple"><i data-lucide="sparkles"></i></div>
+          <span>AI Proposal</span>
+        </button>
+        <button class="qa-item" data-href="vault.html">
+          <div class="qa-icon blue"><i data-lucide="shield"></i></div>
+          <span>Vault</span>
+        </button>
+        <button class="qa-item" data-href="resume.html">
+          <div class="qa-icon orange"><i data-lucide="file-text"></i></div>
+          <span>Resume</span>
+        </button>
+        <button class="qa-item" data-href="portfolio.html">
+          <div class="qa-icon pink"><i data-lucide="image"></i></div>
+          <span>Portfolio</span>
+        </button>
+        <button class="qa-item" data-href="more.html">
+          <div class="qa-icon gray"><i data-lucide="grid-2x2"></i></div>
+          <span>More</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- AI Pitch Generator -->
+    <section class="card pitch-card fade-up" data-href="pitch.html">
+      <div class="pitch-top">
+        <div class="pitch-icon"><i data-lucide="sparkles"></i></div>
+        <div>
+          <h3 class="pitch-title">AI Pitch Generator</h3>
+          <p class="pitch-sub">Craft compelling pitches in seconds</p>
+        </div>
+      </div>
+      <div class="pitch-bottom">
+        <span class="pitch-remaining" id="pitchRemaining">3 pitches left today</span>
+        <button class="pitch-btn" data-href="pitch.html">Generate Pitch</button>
+      </div>
+    </section>
+
+    <!-- Application Overview -->
+    <section class="card app-overview-card fade-up">
+      <div class="card-header">
+        <h2 class="card-title">Application Overview</h2>
+        <button class="view-all-btn" data-href="applications.html">View All</button>
+      </div>
+      <div class="app-stats-grid">
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appApplied">0</span>
+          <span class="app-stat-label">Applied</span>
+        </button>
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appSaved">0</span>
+          <span class="app-stat-label">Saved</span>
+        </button>
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appShortlisted">0</span>
+          <span class="app-stat-label">Shortlisted</span>
+        </button>
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appInterview">0</span>
+          <span class="app-stat-label">Interview</span>
+        </button>
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appRejected">0</span>
+          <span class="app-stat-label">Rejected</span>
+        </button>
+        <button class="app-stat" data-href="applications.html">
+          <span class="app-stat-num" id="appOffered">0</span>
+          <span class="app-stat-label">Offered</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Latest Opportunities -->
+    <section class="card opportunities-card fade-up">
+      <div class="card-header">
+        <h2 class="card-title">Latest Opportunities</h2>
+        <button class="view-all-btn" data-href="explore.html">View All</button>
+      </div>
+      <div class="opp-list" id="oppList">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </section>
+
+    <!-- Playbook -->
+    <section class="card playbook-card fade-up" id="playbookCard">
+      <div class="card-header">
+        <h2 class="card-title">Playbook</h2>
+        <span class="playbook-progress-text" id="playbookProgressText">0 / 0</span>
+      </div>
+      <div class="playbook-chapters" id="playbookChapters">
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line"></div>
+      </div>
+    </section>
+
+    <!-- Freelancer Journey Graph -->
+    <section class="card journey-card fade-up">
+      <div class="card-header">
+        <h2 class="card-title">Freelancer Journey</h2>
+        <select class="journey-select" id="journeySelect" aria-label="Time range">
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="year">This Year</option>
+        </select>
+      </div>
+      <canvas class="journey-canvas" id="journeyCanvas" width="320" height="140"></canvas>
+    </section>
+
+    <!-- Badges -->
+    <section class="card badges-card fade-up" data-href="badges.html">
+      <div class="card-header">
+        <h2 class="card-title">Badges</h2>
+        <i data-lucide="chevron-right" class="card-chevron"></i>
+      </div>
+      <div class="badges-row" id="badgesRow">
+        <div class="badge-skeleton"></div>
+        <div class="badge-skeleton"></div>
+        <div class="badge-skeleton"></div>
+      </div>
+    </section>
+
+    <!-- Rating -->
+    <section class="card rating-card fade-up" data-href="rating.html">
+      <div class="rating-top">
+        <div class="rating-stars" id="ratingStars">
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+          <i data-lucide="star"></i>
+        </div>
+        <span class="rating-num" id="ratingNum">0.0</span>
+      </div>
+      <p class="rating-sub" id="ratingSub">No ratings yet</p>
+    </section>
+
+    <!-- Referral Program -->
+    <section class="card referral-card fade-up" data-href="referral.html">
+      <div class="referral-top">
+        <div class="referral-icon"><i data-lucide="gift"></i></div>
+        <div>
+          <h3 class="card-title">Referral Program</h3>
+          <p class="referral-sub">Invite friends and earn rewards together</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Centre -->
+    <section class="card support-card fade-up" data-href="support.html">
+      <div class="support-top">
+        <div class="support-icon"><i data-lucide="life-buoy"></i></div>
+        <div>
+          <h3 class="card-title">Support Centre</h3>
+          <p class="support-sub">Get help anytime, we're here for you</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Member Since -->
+    <section class="card member-card fade-up" data-href="profile.html">
+      <div class="member-row">
+        <i data-lucide="calendar-clock" class="member-icon"></i>
+        <div class="member-info">
+          <span class="member-label">Member Since</span>
+          <span class="member-value" id="memberSince">—</span>
+        </div>
+      </div>
+      <div class="member-row">
+        <i data-lucide="clock" class="member-icon"></i>
+        <div class="member-info">
+          <span class="member-label">Last Active</span>
+          <span class="member-value" id="lastActive">—</span>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Upgrade to Pro -->
+    <section class="card upgrade-card fade-up" data-href="pricing.html">
+      <div class="upgrade-top">
+        <i data-lucide="crown" class="upgrade-crown"></i>
+        <h3 class="upgrade-title">Unlock HIRENT Pro</h3>
+        <p class="upgrade-sub">Unlimited pitches, advanced analytics, priority support</p>
+      </div>
+      <button class="upgrade-btn" data-href="pricing.html">Upgrade to Pro</button>
+    </section>
+
+    <!-- Logout -->
+    <button class="logout-btn fade-up" id="logoutBtn">
+      <i data-lucide="log-out"></i> Logout
+    </button>
+
+    <div class="dash-footer-spacer"></div>
+  </main>
+
+  <!-- ═══ LOGOUT MODAL ═════════════════════════════════════════ -->
+  <div class="modal-overlay" id="logoutModal" hidden>
+    <div class="modal-card">
+      <div class="modal-icon"><i data-lucide="log-out"></i></div>
+      <h3 class="modal-title">Logout?</h3>
+      <p class="modal-sub">You'll need to sign in again to access your dashboard.</p>
+      <div class="modal-actions">
+        <button class="modal-btn modal-cancel" id="logoutCancel">Cancel</button>
+        <button class="modal-btn modal-confirm" id="logoutConfirm">Logout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ BOTTOM NAVIGATION ════════════════════════════════════ -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="bn-item active" data-href="freelancer-dashboard.html">
+      <i data-lucide="home"></i>
+      <span>Home</span>
+    </button>
+    <button class="bn-item" data-href="explore.html">
+      <i data-lucide="compass"></i>
+      <span>Explore</span>
+    </button>
+    <button class="bn-fab" id="bnFab" aria-label="Create">
+      <i data-lucide="plus"></i>
+    </button>
+    <button class="bn-item" data-href="messages.html">
+      <i data-lucide="message-circle"></i>
+      <span>Messages</span>
+    </button>
+    <button class="bn-item" data-href="profile.html">
+      <i data-lucide="user"></i>
+      <span>Profile</span>
+    </button>
+  </nav>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+  <!-- Dashboard Logic -->
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
